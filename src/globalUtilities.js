@@ -1,6 +1,7 @@
 import ccNetViz_gl from './gl';
 import { partitionByStyle } from './primitiveTools';
 import ccNetViz_layout from './layout/index';
+import ccNetViz_worker from './layout/worker';
 
 var lastUniqId = 0;
 
@@ -167,6 +168,13 @@ export default class GlobalUtilities {
         edges,
         layout_options
       ).apply();
+
+      const workerBlob = new ccNetViz_worker(layout).createBlob(
+        nodes,
+        edges,
+        layout_options
+      );
+      console.log(workerBlob);
     } else if (typeof layout === 'function') {
       options_ = new layout(nodes, edges, layout_options).apply();
     } else if (typeof layout === 'number') {
